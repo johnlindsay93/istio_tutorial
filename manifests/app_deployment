@@ -1,0 +1,44 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: hello-world
+  labels:
+    app: hello-world
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: hello-world
+  minReadySeconds: 10
+  strategy:
+    rollingUpdate:
+      maxSurge: 3
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: hello-world
+    spec:
+      containers:
+        - name: hello-world
+          image: johnsistioacr.azurecr.io/istio-tutorial:latest
+          ports:
+          - containerPort: 5000
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 250m
+            limits:
+              cpu: 500m
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: hello-world-balancer
+spec:
+    type: LoadBalancer
+    ports:
+    - port: 5000
+    selector:
+        app: hello-world
