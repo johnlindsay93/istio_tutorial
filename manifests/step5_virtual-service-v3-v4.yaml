@@ -8,10 +8,10 @@ spec:
   http:
   - route:
     - destination:
-        host: service1
+        host: service
         subset: v3
       weight: 75
     - destination:
-        host: service1
+        host: service
         subset: v4
       weight: 25

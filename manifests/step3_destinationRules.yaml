@@ -14,7 +14,7 @@ kind: DestinationRule
 metadata:
   name: service1
 spec:
-  host: service1
+  host: service
   subsets:
   - name: v3
     labels:
